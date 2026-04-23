@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛡️ ARZAMA POLICE INTELLIGENCE SYSTEM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary-cyan: #00f5ff;
+      --alert-red: #ff1744;
+      --secondary-violet: #8b5cf6;
+      --bg-dark: #0a0a0a;
+      --panel-dark: #1a1a2e;
+      --glass-bg: rgba(255,255,255,0.05);
+      --glow-cyan: 0 0 20px #00f5ff;
+      --glow-red: 0 0 30px #ff1744;
+    }
+    
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #16213e 50%, var(--bg-dark) 100%);
+      color: #e2e8f0;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Logo background */
+    body::after {
+      content: '🛡️';
+      position: fixed;
+      top: 20%;
+      right: 10%;
+      font-size: 8rem;
+      opacity: 0.05;
+      z-index: -2;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(90deg, transparent 49%, rgba(0,245,255,0.03) 50%, transparent 51%);
+      background-size: 50px 50px;
+      animation: scan 20s linear infinite;
+      z-index: -1;
+    }
+    
+    @keyframes scan { 0% { transform: translateY(-50px); } 100% { transform: translateY(100vh); } }
+    
+    .glass-panel { 
+      background: var(--glass-bg); 
+      backdrop-filter: blur(20px); 
+      border: 1px solid rgba(255,255,255,0.1); 
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3); 
+    }
+    
+    .glow-cyan { box-shadow: var(--glow-cyan); }
+    .glow-cyan:hover { box-shadow: 0 0 40px #00f5ff; }
+    .glow-red { box-shadow: var(--glow-red); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { box-shadow: var(--glow-red); } 50% { box-shadow: 0 0 50px #ff1744; } }
+    
+    .neon-text { 
+      background: linear-gradient(45deg, var(--primary-cyan), var(--secondary-violet)); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      background-clip: text; 
+      font-family: 'Orbitron', monospace; 
+      font-weight: 700; 
+      text-shadow: 0 0 10px rgba(0,245,255,0.5); 
+    }
+    
+    .btn-primary { 
+      background: linear-gradient(to right, #06b6d4, #3b82f6); 
+      color: white; 
+      font-weight: bold; 
+      padding: 1rem 2rem; 
+      border-radius: 0.5rem; 
+      transition: all 0.3s; 
+      text-transform: uppercase; 
+      letter-spacing: 0.05em; 
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
+    }
+    .btn-primary:hover { 
+      background: linear-gradient(to right, #0891b2, #2563eb); 
+      transform: translateY(-2px);
+    }
+    
+    .btn-danger { 
+      background: linear-gradient(to right, #ef4444, #dc2626); 
+      color: white; 
+      font-weight: bold; 
+      padding: 0.75rem 1.5rem; 
+      border-radius: 0.5rem; 
+      transition: all 0.3s; 
+      text-transform: uppercase; 
+      letter-spacing: 0.05em; 
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
+    }
+    .btn-danger:hover { 
+      background: linear-gradient(to right, #dc2626, #b91c1c); 
+    }
+    
+    .status-badge {
+      padding: 0.25rem 0.75rem; 
+      border-radius: 9999px; 
+      font-weight: bold; 
+      font-size: 0.875rem;
+    }
+    .status-wanted { 
+      background: rgba(239,68,68,0.2); 
+      border: 1px solid rgba(239,68,68,0.5); 
+      color: #fda4af; 
+      box-shadow: var(--glow-red); 
+    }
+    .status-arrested { 
+      background: rgba(34,197,94,0.2); 
+      border: 1px solid rgba(34,197,94,0.5); 
+      color: #86efac; 
+    }
+    .status-surveillance { 
+      background: rgba(234,179,8,0.2); 
+      border: 1px solid rgba(234,179,8,0.5); 
+      color: #fde68a; 
+    }
+    .status-active { 
+      background: rgba(59,130,246,0.2); 
+      border: 1px solid rgba(59,130,246,0.5); 
+      color: #93c5fd; 
+    }
+    
+    .typing { 
+      overflow: hidden; 
+      border-right: .15em solid var(--primary-cyan); 
+      white-space: nowrap; 
+      animation: typing 3s steps(40, end), blink .75s step-end infinite; 
+    }
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--primary-cyan); } }
+    
+    .dashboard-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 20px; 
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+      body::after { font-size: 4rem; top: 10%; right: 5%; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  
+  <script>
+    // ULTIMATE EMBEDDED DATA - PIYUSH ADMIN
+    const DEMO_DATA = {
+      users: [
+        {id:1, name:"Inspector Piyush Sharma", email:"piyush@arzama.police", password:"admin123", role:"admin"},
+        {id:2, name:"Officer Neha Singh", email:"neha@arzama.police", password:"officer123", role:"officer"},
+        {id:3, name:"Cyber Unit K-9", email:"k9@arzama.police", password:"cyber456", role:"officer"}
+      ],
+      citizens: [
+        {id:1, name:"Rahul Sharma", dob:"1985-03-15", address:"23 MG Road, Arzama Central", id_proof:"ID-ARS-001234", photo_url:"https://randomuser.me/api/portraits/men/1.jpg"},
+        {id:2, name:"Priya Patel", dob:"1990-07-22", address:"45 Nehru Nagar, Arzama East", id_proof:"ID-ARS-005678", photo_url:"https://randomuser.me/api/portraits/women/2.jpg"},
+        {id:3, name:"Vikram Desai", dob:"1978-11-08", address:"12 Industrial Area, Arzama South", id_proof:"ID-ARS-009876", photo_url:"https://randomuser.me/api/portraits/men/3.jpg"},
+        {id:4, name:"Aisha Khan", dob:"1995-04-30", address:"67 Hill View, Arzama North", id_proof:"ID-ARS-112233", photo_url:"https://randomuser.me/api/portraits/women/4.jpg"},
+        {id:5, name:"Unknown Subject X", dob:"????", address:"Classified", id_proof:"ID-ARS-XXXXX", photo_url:"https://i.pravatar.cc/300?img=5"},
+        {id:6, name:"Sanjay Gupta", dob:"1982-09-12", address:"89 Market Street, Arzama West", id_proof:"ID-ARS-445566", photo_url:"https://randomuser.me/api/portraits/men/6.jpg"},
+        {id:7, name:"Meera Joshi", dob:"1992-01-18", address:"34 Park Lane", id_proof:"ID-ARS-778899", photo_url:"https://randomuser.me/api/portraits/women/7.jpg"},
+        {id:8, name:"Rajesh Kumar", dob:"1988-06-05", address:"56 River Side, Arzama East", id_proof:"ID-ARS-001122", photo_url:"https://randomuser.me/api/portraits/men/8.jpg"},
+        {id:9, name:"Lakshmi Nair", dob:"1993-12-27", address:"78 College Road, Arzama South", id_proof:"ID-ARS-334455", photo_url:"https://randomuser.me/api/portraits/women/9.jpg"},
+        {id:10, name:"Amit Singh", dob:"1980-08-14", address:"91 Highway 7, Arzama North", id_proof:"ID-ARS-667788", photo_url:"https://randomuser.me/api/portraits/men/10.jpg"},
+        {id:11, name:"Piyush Sharma", dob:"1988-05-12", address:"HQ Arzama Police Station", id_proof:"ID-ARS-ADMIN001", photo_url:"https://randomuser.me/api/portraits/men/11.jpg"}
+      ],
+      criminalRecords: [
+        {id:1, citizen_id:3, case_id:1, charges:"Arms Trafficking, Illegal Weapons", status:"wanted"},
+        {id:2, citizen_id:5, case_id:2, charges:"Cyber Terrorism, System Breach", status:"under_surveillance"},
+        {id:3, citizen_id:1, case_id:1, charges:"Cyber Fraud, Money Laundering", status:"arrested"},
+        {id:4, citizen_id:6, case_id:3, charges:"Drug Trafficking, Distribution", status:"wanted"},
+        {id:5, citizen_id:8, case_id:4, charges:"Financial Fraud, Ponzi Scheme", status:"cleared"},
+        {id:6, citizen_id:2, case_id:2, charges:"Cybercrime Accomplice", status:"active"},
+        {id:7, citizen_id:4, case_id:3, charges:"Drug Possession", status:"under_surveillance"},
+        {id:8, citizen_id:7, case_id:1, charges:"Arms Possession", status:"arrested"}
+      ],
+      cases: [
+        {id:1, title:"Operation Night Shadow (Cybercrime)", status:"active", assigned_officer:"Inspector Piyush Sharma"},
+        {id:2, title:"Ghost Protocol Breach", status:"active", assigned_officer:"Cyber Unit K-9"},
+        {id:3, title:"Shadow Network (Drugs)", status:"active", assigned_officer:"Officer Neha Singh"},
+        {id:4, title:"Highway Heist (Robbery)", status:"cleared", assigned_officer:"Inspector Piyush Sharma"},
+        {id:5, title:"Red Corridor Arms", status:"active", assigned_officer:"Inspector Piyush Sharma"}
+      ]
+    };
+
+    class APIS {
+      constructor() {
+        this.data = DEMO_DATA;
+        this.currentUser = null;
+        this.editingId = null;
+        this.init();
+      }
+      
+      init() {
+        this.showLogin();
+        console.log('🛡️ ULTIMATE APIS v2.0 - Piyush Admin');
+      }
+      
+      login(email, password) {
+        const user = this.data.users.find(u => u.email === email && u.password === password);
+        if (user) {
+          this.currentUser = user;
+          this.showDashboard();
+          return true;
+        }
+        alert('❌ Access Denied');
+        return false;
+      }
+      
+      logout() {
+        this.currentUser = null;
+        this.showLogin();
+      }
+      
+      updateCriminalStatus(recordId, newStatus) {
+        const record = this.data.criminalRecords.find(r => r.id === recordId);
+        if (record) {
+          record.status = newStatus;
+          this.logActivity(`Status changed to ${newStatus.toUpperCase()}`);
+          this.showDashboard();
+        }
+      }
+      
+      logActivity(action) {
+        console.log(`📊 [${new Date().toLocaleTimeString()}] ${action} - ${this.currentUser.name}`);
+      }
+      
+      showCitizenModal(citizen = null) {
+        document.body.insertAdjacentHTML('beforeend', `
+          <div class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50" onclick="this.remove()">
+            <div class="glass-panel p-8 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+              <h2 class="neon-text text-3xl font-bold mb-8 text-center">${citizen ? 'EDIT CITIZEN' : 'ADD CITIZEN'}</h2>
+              <form id="citizenForm" class="space-y-4">
+                <input name="name" value="${citizen?.name || ''}" placeholder="Full Name *" class="w-full glass-panel p-4 rounded-xl border border-cyan-500/30 focus:glow-cyan text-lg" required>
+                <input name="dob" type="date" value="${citizen?.dob || ''}" class="w-full glass-panel p-4 rounded-xl border border-cyan-500/30 focus:glow-cyan" required>
+                <input name="address" value="${citizen?.address || ''}" placeholder="Full Address *" class="w-full glass-panel p-4 rounded-xl border border-cyan-500/30 focus:glow-cyan" required>
+                <input name="id_proof" value="${citizen?.id_proof || ''}" placeholder="ID Proof *" class="w-full glass-panel p-4 rounded-xl border border-cyan-500/30 focus:glow-cyan" required>
+                <div class="text-sm text-gray-400">✅ Photo auto-generates from API</div>
+                <div class="flex gap-4 pt-4">
+                  <button type="submit" class="btn-primary flex-1">${citizen ? 'UPDATE' : 'ADD CITIZEN'}</button>
+                  <button type="button" class="glass-panel px-8 py-4 rounded-xl border border-gray-500/50 hover:bg-white/10 flex-1 text-center" onclick="this.closest('div[onclick]').remove()">CANCEL</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        `);
+        
+        document.getElementById('citizenForm').onsubmit = (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const citizenData = Object.fromEntries(formData);
+          citizenData.photo_url = `https://randomuser.me/api/portraits/${Math.random()>0.5 ? 'men' : 'women'}/${Math.floor(Math.random()*90)+1}.jpg`;
+          if (citizen) {
+            Object.assign(citizen, citizenData);
+            this.logActivity(`Updated citizen ${citizenData.name}`);
+          } else {
+            citizenData.id = Date.now();
+            this.data.citizens.unshift(citizenData);
+            this.logActivity(`Added new citizen ${citizenData.name}`);
+          }
+          e.target.closest('div[onclick]').remove();
+          this.showDashboard();
+        };
+      }
+      
+      showLogin() {
+        document.getElementById('app').innerHTML = `
+          <div class="min-h-screen flex items-center justify-center p-4 md:p-8">
+            <div class="text-center glass-panel p-8 md:p-12 rounded-3xl w-full max-w-md glow-cyan">
+              <div class="neon-text text-4xl md:text-5xl mb-6 font-bold">🛡️ APIS</div>
+              <div class="text-xl md:text-2xl mb-8 md:mb-12 text-cyan-400 font-semibold">ARZAMA POLICE INTELLIGENCE SYSTEM</div>
+              <h2 class="neon-text text-2xl md:text-3xl mb-8 font-bold">ADMIN LOGIN</h2>
+              <form id="loginForm" class="space-y-4 md:space-y-6">
+                <input type="email" id="loginEmail" placeholder="piyush@arzama.police" class="w-full glass-panel p-4 rounded-xl border border-cyan-500/50 focus:glow-cyan text-lg" required>
+                <input type="password" id="loginPassword" placeholder="admin123" class="w-full glass-panel p-4 rounded-xl border border-cyan-500/50 focus:glow-cyan text-lg" required>
+                <button type="submit" class="btn-primary w-full text-lg py-3 md:py-4 font-bold">🔐 AUTHENTICATE</button>
+              </form>
+              <div class="text-sm md:text-base text-gray-400 mt-6 p-4 bg-black/30 rounded-xl border border-gray-600/50">
+                <strong>PIYUSH ADMIN:</strong><br>
+                <code class="font-mono bg-gray-900 px-2 py-1 rounded">piyush@arzama.police / admin123</code>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        document.getElementById('loginForm').onsubmit = (e) => {
+          e.preventDefault();
+          const email = document.getElementById('loginEmail').value;
+          const password = document.getElementById('loginPassword').value;
+          if (this.login(email, password)) {
+            setTimeout(() => this.showDashboard(), 500);
+          }
+        };
+      }
+      
+      showDashboard() {
+        const stats = {
+          citizens: this.data.citizens.length,
+          wanted: this.data.criminalRecords.filter(r => r.status === 'wanted').length,
+          arrested: this.data.criminalRecords.filter(r => r.status === 'arrested').length,
+          activeCases: this.data.cases.filter(c => c.status === 'active').length
+        };
+        
+        const citizenList = this.data.citizens.slice(0,8).map(c => `
+          <div class="flex items-center p-4 glass-panel rounded-xl hover:bg-white/10 transition-all">
+            <img src="${c.photo_url}" class="w-14 h-14 md:w-16 md:h-16 rounded-full border-4 border-cyan-500 glow-cyan mr-4 flex-shrink-0" alt="${c.name}" onerror="this.src='https://via.placeholder.com/64/00f5ff/ffffff?text=${c.name.charAt(0)}'">
+            <div class="flex-1 min-w-0">
+              <div class="font-bold text-base md:text-lg truncate">${c.name}</div>
+              <div class="text-xs md:text-sm text-gray-400 truncate">${c.id_proof}</div>
+              <div class="text-xs opacity-75">${c.dob} • ${c.address.split(',')[0]}</div>
+            </div>
+            <button onclick="apis.showCitizenModal(${JSON.stringify(c)})" class="ml-4 p-2 text-cyan-400 hover:glow-cyan rounded-full">✏️</button>
+          </div>
+        `).join('');
+        
+        const criminalList = this.data.criminalRecords.map(r => {
+          const citizen = this.data.citizens.find(c => c.id === r.citizen_id);
+          const caseName = this.data.cases.find(c => c.id === r.case_id)?.title || 'N/A';
+          return `
+            <div class="flex items-start p-4 glass-panel rounded-xl hover:bg-white/10 transition-all">
+              <img src="${citizen?.photo_url}" class="w-12 h-12 rounded-full border-2 ${r.status==='wanted' ? 'border-red-500 glow-red' : 'border-gray-500'} mr-4 mt-1 flex-shrink-0" alt="${citizen?.name}">
+              <div class="flex-1 min-w-0">
+                <div class="font-bold text-sm md:text-base">${citizen?.name || 'Unknown'}</div>
+                <div class="text-xs text-gray-400">${r.charges}</div>
+                <div class="text-xs mt-1">${caseName.split('(')[0]}</div>
+              </div>
+              <div class="ml-4 space-y-1">
+                <select onchange="apis.updateCriminalStatus(${r.id}, this.value)" class="status-${r.status} status-badge text-xs cursor-pointer">
+                  <option value="wanted" ${r.status==='wanted' ? 'selected' : ''}>WANTED</option>
+                  <option value="arrested" ${r.status==='arrested' ? 'selected' : ''}>ARRESTED</option>
+                  <option value="under_surveillance" ${r.status==='under_surveillance' ? 'selected' : ''}>SURVEILLANCE</option>
+                  <option value="active" ${r.status==='active' ? 'selected' : ''}>ACTIVE</option>
+                  <option value="cleared" ${r.status==='cleared' ? 'selected' : ''}>CLEARED</option>
+                </select>
+              </div>
+            </div>
+          `;
+        }).join('');
+        
+        document.getElementById('app').innerHTML = `
+          <div class="min-h-screen p-4 md:p-6">
+            <header class="glass-panel glow-cyan p-6 rounded-2xl mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div>
+                <h1 class="neon-text text-3xl md:text-4xl font-bold mb-2">🛡️ ARZAMA POLICE INTELLIGENCE</h1>
+                <p class="text-cyan-300 text-base md:text-lg">Securing Intelligence. Enforcing Justice. | Inspector Piyush Sharma</p>
+              </div>
+              <div class="flex items-center space-x-4 w-full md:w-auto justify-center md:justify-end">
+                <span class="text-lg font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent px-3 py-1 rounded-lg glass-panel">ADMIN</span>
+                <button onclick="apis.logout()" class="btn-danger px-6 py-2 text-sm md:text-base">LOGOUT</button>
+              </div>
+            </header>
+            
+            <div class="dashboard-grid mb-8">
+              <div class="glass-panel p-6 md:p-8 rounded-2xl glow-violet text-center">
+                <h3 class="text-xl md:text-2xl font-bold mb-4 text-violet-300 uppercase tracking-wide">TOTAL CITIZENS</h3>
+                <div class="text-4xl md:text-5xl font-bold text-violet-400">${stats.citizens}</div>
+              </div>
+              <div class="glass-panel p-6 md:p-8 rounded-2xl glow-red text-center">
+                <h3 class="text-xl md:text-2xl font-bold mb-4 text-red-300 uppercase tracking-wide">WANTED</h3>
+                <div class="text-4xl md:text-5xl font-bold text-red-400">${stats.wanted}</div>
+              </div>
+              <div class="glass-panel p-6 md:p-8 rounded-2xl text-center">
+                <h3 class="text-xl md:text-2xl font-bold mb-4 text-green-300 uppercase tracking-wide">ARRESTED</h3>
+                <div class="text-4xl md:text-5xl font-bold text-green-400">${stats.arrested}</div>
+              </div>
+              <div class="glass-panel p-6 md:p-8 rounded-2xl text-center">
+                <h3 class="text-xl md:text-2xl font-bold mb-4 text-yellow-300 uppercase tracking-wide">ACTIVE CASES</h3>
+                <div class="text-4xl md:text-5xl font-bold text-yellow-400">${stats.activeCases}</div>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8">
+              <div class="glass-panel p-6 md:p-8 rounded-2xl">
+                <div class="flex justify-between items-center mb-6">
+                  <h2 class="neon-text text-2xl md:text-3xl font-bold">👥 CITIZEN DATABASE</h2>
+                  <button onclick="apis.showCitizenModal()" class="btn-primary px-4 py-2 text-sm md:text-base">+ ADD CITIZEN</button>
+                </div>
+                <div class="space-y-3 md:space-y-4 max-h-80 md:max-h-96 overflow-auto">
+                  ${citizenList}
+                </div>
+              </div>
+              
+              <div class="glass-panel p-6 md:p-8 rounded-2xl">
+                <h2 class="neon-text text-2xl md:text-3xl font-bold mb-6">🚨 CRIMINAL RECORDS</h2>
+                <div class="space-y-3 md:space-y-4 max-h-96 overflow-auto">
+                  ${criminalList}
+                </div>
+              </div>
+            </div>
+            
+            <div class="glass-panel p-6 md:p-8 rounded-2xl">
+              <h2 class="neon-text text-2xl md:text-3xl font-bold mb-6">📊 COMMAND LOG</h2>
+              <div class="text-sm md:text-base text-gray-300 space-y-2 max-h-32 overflow-auto p-4 bg-black/20 rounded-xl">
+                <div>• <strong>PIYUSH SHARMA</strong> logged in successfully</div>
+                <div>• Database loaded: ${stats.citizens} citizens, ${stats.wanted} wanted</div>
+                <div>• Active operations: ${stats.activeCases} cases</div>
+                <div>• System: ✅ FULLY OPERATIONAL | Mobile responsive</div>
+              </div>
+            </div>
+          </div>
+        `;
+        console.log('✅ ULTIMATE Dashboard - Piyush Admin');
+      }
+    }
+    
+    // Global instance
+    const apis = new APIS();
+    
+    console.log('🚀 ARZAMA POLICE ULTIMATE v2.0 - Mobile Ready');
+  </script>
+</body>
+</html>

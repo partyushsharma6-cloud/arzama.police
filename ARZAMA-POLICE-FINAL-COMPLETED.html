@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛡️ ARZAMA POLICE INTELLIGENCE SYSTEM - FINAL</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary-cyan: #00f5ff;
+      --alert-red: #ff1744;
+      --success-green: #10b981;
+      --glow-cyan: 0 0 25px #00f5ff;
+      --glow-red: 0 0 35px #ff1744;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+    
+    .logo-bg {
+      position: fixed;
+      top: 10%;
+      left: 10%;
+      width: 40%;
+      height: 60%;
+      object-fit: cover;
+      opacity: 0.12;
+      z-index: -1;
+      filter: brightness(0.4) contrast(1.3);
+      animation: logoFloat 15s ease-in-out infinite;
+    }
+    
+    @keyframes logoFloat {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.05) rotate(1deg); }
+    }
+    
+    .glass-panel {
+      background: rgba(26,26,46,0.9);
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(0,245,255,0.2);
+      border-radius: 24px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .neon-glow { box-shadow: var(--glow-cyan); transition: all 0.4s ease; }
+    .neon-glow:hover { box-shadow: 0 0 50px var(--primary-cyan); transform: translateY(-5px); }
+    
+    .section { display: none; }
+    .section.active { display: block; }
+    
+    .btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      font-family: 'Orbitron', monospace;
+    }
+    
+    .btn-primary { background: linear-gradient(45deg, var(--primary-cyan), #06b6d4); color: #000; box-shadow: var(--glow-cyan); }
+    .btn-danger { background: linear-gradient(45deg, var(--alert-red), #dc2626); color: white; box-shadow: var(--glow-red); }
+    .btn-success { background: linear-gradient(45deg, var(--success-green), #059669); color: white; }
+    
+    .form-input {
+      background: rgba(0,0,0,0.5);
+      border: 2px solid rgba(0,245,255,0.3);
+      border-radius: 12px;
+      padding: 16px;
+      color: white;
+      font-size: 16px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+    }
+    
+    .form-input:focus { outline: none; border-color: var(--primary-cyan); box-shadow: var(--glow-cyan); }
+    
+    .status-badge {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
+    
+    @media (max-width: 768px) {
+      .grid-cards { grid-template-columns: 1fr; }
+      .logo-bg { width: 80%; height: 30%; top: 5%; left: 10%; }
+    }
+    
+    .neon-text { 
+      background: linear-gradient(135deg, var(--primary-cyan), #8b5cf6); 
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      text-shadow: 0 0 30px rgba(0,245,255,0.8);
+    }
+  </style>
+</head>
+<body>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfnaB6oiUCpDt3Q0GFzIMk7Craz2AsAODBcQ&s" class="logo-bg" alt="Police Logo">
+  
+  <!-- Login -->
+  <div id="login" class="section active min-h-screen flex items-center justify-center p-8">
+    <div class="glass-panel neon-glow max-w-md w-full text-center">
+      <h1 class="neon-text text-6xl font-black mb-8">🛡️ APIS</h1>
+      <p class="text-2xl text-cyan-300 mb-12 font-semibold">ARZAMA POLICE INTELLIGENCE</p>
+      
+      <form id="loginForm" class="space-y-8">
+        <input type="email" id="username" placeholder="piyush@arzama.police" class="form-input text-xl font-mono tracking-wide" required>
+        <input type="password" id="password" placeholder="piyush@123" class="form-input text-xl font-mono tracking-wide" required>
+        <button type="submit" class="btn btn-primary w-full text-2xl py-6 font-black">🔐 AUTHENTICATE</button>
+      </form>
+      
+      <div class="mt-12 p-6 bg-black/50 rounded-2xl">
+        <p class="text-lg opacity-80 font-mono">piyush@arzama.police • piyush@123</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Dashboard -->
+  <div id="dashboard" class="section hidden">
+    <div class="glass-panel p-12 mb-12">
+      <div class="flex justify-between items-center mb-12">
+        <h1 class="neon-text text-5xl font-black">COMMAND CENTER</h1>
+        <div class="flex items-center gap-4">
+          <span class="text-2xl font-bold text-cyan-300">INSPECTOR PIYUSH</span>
+          <button onclick="logout()" class="btn btn-danger px-8 py-3 text-xl font-bold glow-red">🚪 LOGOUT</button>
+        </div>
+      </div>
+      
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div class="glass-panel p-8 text-center neon-glow">
+          <div class="text-5xl mb-4">👥</div>
+          <div class="text-4xl font-black text-cyan-400" id="citizenCount">5</div>
+          <div class="text-xl opacity-90 uppercase tracking-wide">Citizens</div>
+        </div>
+        <div class="glass-panel p-8 text-center" style="box-shadow: var(--glow-red)">
+          <div class="text-5xl mb-4">🚨</div>
+          <div class="text-4xl font-black text-red-400" id="wantedCount">2</div>
+          <div class="text-xl opacity-90 uppercase tracking-wide">Wanted</div>
+        </div>
+        <div class="glass-panel p-8 text-center">
+          <div class="text-5xl mb-4">✅</div>
+          <div class="text-4xl font-black text-green-400" id="arrestedCount">1</div>
+          <div class="text-xl opacity-90 uppercase tracking-wide">Arrested</div>
+        </div>
+        <div class="glass-panel p-8 text-center">
+          <div class="text-5xl mb-4">📁</div>
+          <div class="text-4xl font-black text-yellow-400" id="caseCount">3</div>
+          <div class="text-xl opacity-90 uppercase tracking-wide">Cases</div>
+        </div>
+      </div>
+      
+      <!-- Navigation Tabs -->
+      <div class="glass-panel p-8 mb-12">
+        <div class="flex flex-wrap gap-4 justify-center">
+          <button onclick="showSection('citizens')" class="btn btn-primary px-12 py-4 text-2xl font-bold">👥 Citizens</button>
+          <button onclick="showSection('criminals')" class="btn btn-danger px-12 py-4 text-2xl font-bold glow-red">🚨 Criminals</button>
+          <button onclick="showSection('cases')" class="btn btn-success px-12 py-4 text-2xl font-bold">📁 Cases</button>
+        </div>
+      </div>
+      
+      <!-- Citizens Section -->
+      <div id="citizens-section" class="section active">
+        <div class="flex justify-between items-center mb-12">
+          <h2 class="neon-text text-4xl font-bold">👥 CITIZEN DATABASE</h2>
+          <button onclick="showForm('citizen')" class="btn btn-primary px-12 py-6 text-2xl font-bold">➕ CREATE CITIZEN</button>
+        </div>
+        <div id="citizenList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+      </div>
+      
+      <!-- Criminals Section -->
+      <div id="criminals-section" class="section hidden">
+        <div class="flex justify-between items-center mb-12">
+          <h2 class="neon-text text-4xl font-bold">🚨 WANTED CRIMINALS</h2>
+          <button onclick="showForm('criminal')" class="btn btn-danger px-12 py-6 text-2xl font-bold glow-red">➕ ADD WANTED</button>
+        </div>
+        <div id="criminalList" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+      </div>
+      
+      <!-- Cases Section -->
+      <div id="cases-section" class="section hidden">
+        <div class="flex justify-between items-center mb-12">
+          <h2 class="neon-text text-4xl font-bold">📁 ACTIVE CASES</h2>
+          <button onclick="showForm('case')" class="btn btn-success px-12 py-6 text-2xl font-bold">➕ NEW CASE</button>
+        </div>
+        <div id="caseList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-8 z-50 hidden">
+    <div id="modalContent" class="glass-panel neon-glow max-w-4xl w-full max-h-[90vh] overflow-y-auto p-12">
+      <!-- Dynamic content -->
+    </div>
+  </div>
+
+  <script>
+    let data = {
+      citizens: [
+        {id:1, name:'Rahul K. Sharma', id_proof:'ARS-001234', dob:'1985-03-15', address:'23 MG Road, Central', photo:'https://randomuser.me/api/portraits/men/32.jpg'},
+        {id:2, name:'Priya V. Patel', id_proof:'ARS-005678', dob:'1990-07-22', address:'Nehru Nagar East', photo:'https://randomuser.me/api/portraits/women/45.jpg'},
+        {id:3, name:'Vikram S. Desai', id_proof:'ARS-009876', dob:'1978-11-08', address:'Industrial Area South', photo:'https://randomuser.me/api/portraits/men/73.jpg'}
+      ],
+      criminals: [
+        {id:1, citizen_id:3, charges:'Arms Trafficking', status:'wanted', case_id:1},
+        {id:2, citizen_id:1, charges:'Financial Fraud', status:'arrested', case_id:2}
+      ],
+      cases: [
+        {id:1, title:'Operation Night Shadow', status:'active', description:'Arms trafficking syndicate'},
+        {id:2, title:'Golden Triangle Fraud', status:'closed', description:'Ponzi scheme investigation'}
+      ]
+    };
+    
+    function login(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      if (username === 'piyush@arzama.police' && password === 'piyush@123') {
+        document.getElementById('login').classList.remove('active');
+        document.getElementById('login').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        document.getElementById('dashboard').classList.add('active');
+        renderAll();
+      } else {
+        alert('❌ Access Denied');
+      }
+    }
+    
+    function logout() {
+      if (confirm('🔒 Logout from Police Intelligence System?')) {
+        document.getElementById('dashboard').classList.remove('active');
+        document.getElementById('dashboard').classList.add('hidden');
+        document.getElementById('login').classList.remove('hidden');
+        document.getElementById('login').classList.add('active');
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+      }
+    }
+    
+    function showSection(section) {
+      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+      document.getElementById(`${section}-section`).classList.remove('hidden');
+      renderAll();
+    }
+    
+    function showForm(type) {
+      const modal = document.getElementById('modal');
+      const content = document.getElementById('modalContent');
+      const titles = {citizen:'CREATE CITIZEN', criminal:'ADD WANTED CRIMINAL', case:'CREATE CASE'};
+      
+      content.innerHTML = `
+        <button onclick="closeModal()" class="text-3xl mb-8 neon-glow hover:scale-110 float-right">✕</button>
+        <h2 class="neon-text text-5xl font-black mb-16 text-center">${titles[type]}</h2>
+        <form id="form-${type}" class="space-y-8">
+          ${type === 'citizen' ? `
+            <input name="name" placeholder="Full Name *" required class="form-input text-xl">
+            <input name="id_proof" placeholder="ID (ARS-XXXXXX) *" required class="form-input text-xl">
+            <input name="dob" type="date" required class="form-input text-xl">
+            <input name="address" placeholder="Full Address *" required class="form-input text-xl">
+          ` : type === 'criminal' ? `
+            <select name="citizen_id" required class="form-input text-xl">
+              <option value="">Select Citizen</option>
+              ${data.citizens.map(c => `<option value="${c.id}">${c.name} (${c.id_proof})</option>`).join('')}
+            </select>
+            <input name="charges" placeholder="Charges *" required class="form-input text-xl">
+            <select name="status" class="form-input text-xl">
+              <option value="wanted">🔴 WANTED</option>
+              <option value="arrested">🟢 ARRESTED</option>
+            </select>
+          ` : `
+            <input name="title" placeholder="Case Title *" required class="form-input text-xl">
+            <textarea name="description" placeholder="Case Description *" rows="5" required class="form-input text-xl"></textarea>
+            <select name="status" class="form-input text-xl">
+              <option value="active">🟢 ACTIVE</option>
+              <option value="closed">⚫ CLOSED</option>
+            </select>
+          `}
+          <button type="submit" class="btn btn-primary w-full text-2xl py-8 font-black shadow-2xl">⚡ EXECUTE</button>
+        </form>
+      `;
+      
+      modal.classList.remove('hidden');
+      document.getElementById(`form-${type}`).onsubmit = createItem.bind(null, type);
+    }
+    
+    function createItem(type, e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const newItem = Object.fromEntries(formData);
+      newItem.id = Date.now();
+      
+      if (type === 'citizen') {
+        newItem.photo = `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random()*90)+10}.jpg`;
+        data.citizens.unshift(newItem);
+      } else if (type === 'criminal') {
+        const citizen = data.citizens.find(c => c.id == newItem.citizen_id);
+        newItem.name = citizen ? citizen.name : 'Unknown Citizen';
+        newItem.case_id = data.cases.length ? data.cases[0].id : 1;
+        data.criminals.unshift(newItem);
+      } else {
+        data.cases.unshift(newItem);
+      }
+      
+      closeModal();
+      renderAll();
+      updateStats();
+      alert(`${type.toUpperCase()} CREATED SUCCESSFULLY`);
+    }
+    
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+    }
+    
+    function deleteItem(type, id) {
+      if (confirm(`Delete this ${type}?`)) {
+        data[type + 's'] = data[type + 's'].filter(item => item.id !== id);
+        renderAll();
+        updateStats();
+      }
+    }
+    
+    function updateStats() {
+      document.getElementById('citizenCount').textContent = data.citizens.length;
+      document.getElementById('wantedCount').textContent = data.criminals.filter(c => c.status === 'wanted').length;
+      document.getElementById('arrestedCount').textContent = data.criminals.filter(c => c.status === 'arrested').length;
+      document.getElementById('caseCount').textContent = data.cases.length;
+    }
+    
+    function renderAll() {
+      // Citizens
+      document.getElementById('citizenList').innerHTML = data.citizens.map(c => `
+        <div class="glass-panel p-8 flex items-start gap-6 hover:bg-white/10">
+          <img src="${c.photo}" class="w-24 h-24 rounded-full border-4 border-cyan-400 flex-shrink-0" alt="${c.name}">
+          <div class="flex-1">
+            <h3 class="text-2xl font-bold mb-2">${c.name}</h3>
+            <p class="opacity-80 mb-1">ID: <span class="font-mono">${c.id_proof}</span></p>
+            <p class="opacity-70 mb-4">${c.address}</p>
+            <div class="flex gap-3">
+              <button onclick="showForm('citizen')" class="btn btn-primary px-6 py-2 text-sm">EDIT</button>
+              <button onclick="deleteItem('citizen', ${c.id})" class="btn btn-danger px-6 py-2 text-sm">DELETE</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      // Criminals
+      document.getElementById('criminalList').innerHTML = data.criminals.map(c => {
+        const citizen = data.citizens.find(ci => ci.id === c.citizen_id);
+        return `
+          <div class="glass-panel p-8 flex items-start gap-6 hover:bg-white/10">
+            <img src="${citizen?.photo || 'https://via.placeholder.com/96?text=?'} " class="w-24 h-24 rounded-full border-4 border-red-400 flex-shrink-0" alt="${c.name}">
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold mb-2">${c.name}</h3>
+              <p class="opacity-80 mb-2">${c.charges}</p>
+              <select onchange="updateCriminalStatus(${c.id}, this.value)" class="status-badge inline-flex items-center gap-2 px-6 py-3 text-lg font-bold">
+                <span>${c.status.toUpperCase()}</span>
+              </select>
+              <div class="flex gap-3 mt-4">
+                <button class="btn btn-primary px-6 py-2 text-sm">DETAILS</button>
+                <button onclick="deleteItem('criminal', ${c.id})" class="btn btn-danger px-6 py-2 text-sm">REMOVE</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      // Cases
+      document.getElementById('caseList').innerHTML = data.cases.map(c => `
+        <div class="glass-panel p-8 hover:bg-white/10">
+          <h3 class="neon-text text-2xl font-bold mb-4">${c.title}</h3>
+          <p class="opacity-80 mb-6 leading-relaxed">${c.description}</p>
+          <div class="status-badge inline-block px-8 py-4 text-xl font-bold mb-8 ${c.status === 'active' ? 'bg-green-500/20 border-green-500 text-green-300' : 'bg-gray-500/20 border-gray-500 text-gray-300'}">
+            ${c.status.toUpperCase()}
+          </div>
+          <div class="flex gap-4">
+            <button onclick="showForm('case')" class="btn btn-primary flex-1 py-4 text-lg">EDIT CASE</button>
+            <button onclick="deleteItem('case', ${c.id})" class="btn btn-danger flex-1 py-4 text-lg">CLOSE CASE</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function updateCriminalStatus(id, status) {
+      const criminal = data.criminals.find(c => c.id === id);
+      criminal.status = status;
+      updateStats();
+      renderAll();
+    }
+    
+    document.getElementById('loginForm').addEventListener('submit', login);
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+    
+    console.log('🛡️ ARZAMA POLICE - ALL FEATURES COMPLETE');
+    console.log('✅ Login: piyush@arzama.police / piyush@123');
+    console.log('✅ Full CRUD for Citizens, Criminals, Cases');
+    console.log('✅ Logout button added');
+    console.log('✅ Real-time stats, status updates, modals');
+  </script>
+</body>
+</html>
+

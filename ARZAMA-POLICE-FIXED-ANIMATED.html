@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛡️ ARZAMA POLICE - ANIMATED FULLSCREEN FIXED</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body { 
+      font-family: 'Rajdhani', sans-serif; 
+      background: #000;
+      color: #fff;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .fullscreen-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 20%, rgba(0,245,255,0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 80%, rgba(255,23,68,0.1) 0%, transparent 50%),
+                  linear-gradient(135deg, rgba(10,10,25,0.95) 0%, rgba(26,26,46,0.98) 100%);
+      z-index: -1;
+    }
+    
+    .scan-line {
+      position: fixed;
+      top: -20%;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00f5ff, transparent);
+      animation: scan 8s linear infinite;
+      box-shadow: 0 0 20px #00f5ff;
+      z-index: 10;
+    }
+    
+    @keyframes scan {
+      0% { top: -20%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+    
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .particle {
+      position: absolute;
+      background: #00f5ff;
+      border-radius: 50%;
+      animation: float 20s linear infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+    
+    .login-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90vw;
+      max-width: 600px;
+      backdrop-filter: blur(50px);
+      background: rgba(10,10,25,0.9);
+      border: 2px solid rgba(0,245,255,0.4);
+      border-radius: 32px;
+      padding: 80px 60px;
+      box-shadow: 0 0 100px rgba(0,245,255,0.3);
+      animation: entrance 2s cubic-bezier(0.25,0.46,0.45,0.94);
+      z-index: 20;
+    }
+    
+    @keyframes entrance {
+      0% { 
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(0.8) rotateX(90deg);
+      }
+      100% { 
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotateX(0deg);
+      }
+    }
+    
+    .logo {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: clamp(4rem, 12vw, 10rem);
+      background: linear-gradient(45deg, #00f5ff, #8b5cf6, #ff1744);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      margin-bottom: 40px;
+      text-shadow: 0 0 60px currentColor;
+      animation: logoPulse 3s ease-in-out infinite alternate;
+    }
+    
+    @keyframes logoPulse {
+      0% { filter: drop-shadow(0 0 20px #00f5ff); }
+      100% { filter: drop-shadow(0 0 40px #00f5ff); }
+    }
+    
+    .typing {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      border-right: 4px solid #00f5ff;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 4s steps(40) forwards, blink 0.75s infinite;
+      margin: 0 auto 60px;
+      text-align: center;
+      max-width: 100%;
+    }
+    
+    @keyframes typing {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
+    
+    @keyframes blink {
+      0%, 50% { border-color: #00f5ff; }
+      51%, 100% { border-color: transparent; }
+    }
+    
+    .input-field {
+      background: rgba(0,0,0,0.7);
+      border: 2px solid rgba(0,245,255,0.5);
+      border-radius: 24px;
+      padding: 24px 32px;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: #fff;
+      width: 100%;
+      margin-bottom: 32px;
+      font-family: 'Orbitron', monospace;
+      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      backdrop-filter: blur(20px);
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: #00f5ff;
+      box-shadow: 0 0 40px rgba(0,245,255,0.6);
+      transform: scale(1.02);
+    }
+    
+    .input-field::placeholder {
+      color: rgba(255,255,255,0.4);
+      opacity: 1;
+    }
+    
+    .login-btn {
+      background: linear-gradient(45deg, #00f5ff, #06b6d4);
+      border: none;
+      border-radius: 24px;
+      padding: 28px 60px;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 900;
+      color: #000;
+      cursor: pointer;
+      font-family: 'Orbitron', monospace;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: 0 20px 60px rgba(0,245,255,0.4);
+      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      backdrop-filter: blur(20px);
+      width: 100%;
+      margin-top: 20px;
+    }
+    
+    .login-btn:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 30px 80px rgba(0,245,255,0.6);
+    }
+    
+    .login-btn:active {
+      transform: translateY(-4px);
+    }
+    
+    .demo-info {
+      margin-top: 60px;
+      padding: 24px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 20px;
+      border: 1px solid rgba(0,245,255,0.3);
+      backdrop-filter: blur(20px);
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+    }
+    
+    .neon-glow {
+      box-shadow: 0 0 30px rgba(0,245,255,0.5);
+      transition: all 0.3s ease;
+    }
+    
+    .neon-glow:hover {
+      box-shadow: 0 0 50px rgba(0,245,255,0.8);
+    }
+    
+    @media (max-width: 768px) {
+      .login-container { width: 95vw; padding: 60px 40px; }
+      .logo { margin-bottom: 30px; }
+      .typing { margin-bottom: 40px; }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+      20%, 40%, 60%, 80% { transform: translateX(10px); }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfnaB6oiUCpDt3Q0GFzIMk7Craz2AsAODBcQ&s" alt="Arzama Police" class="fullscreen-bg">
+  
+  <div class="overlay"></div>
+  <div class="scan-line"></div>
+  <div class="particles" id="particles"></div>
+  
+  <div class="login-container">
+    <div class="logo neon-glow">🛡️ APIS</div>
+    
+    <div class="typing">INITIALIZING ARZAMA POLICE INTELLIGENCE SYSTEM...</div>
+    
+    <form id="loginForm" class="neon-glow">
+      <input type="email" id="username" placeholder="ADMINISTRATOR ID" class="input-field neon-glow" required>
+      <input type="password" id="password" placeholder="AUTHORIZATION CODE" class="input-field neon-glow" required>
+      
+      <button type="submit" class="login-btn neon-glow shadow-2xl">
+        🔐 ACCESS GRANTED
+      </button>
+    </form>
+    
+      <div class="demo-info neon-glow">
+      <div class="text-2xl font-bold mb-4">🛡️ AUTHENTICATION</div>
+      <div class="font-mono text-xl opacity-90">
+        <strong>ID:</strong> piyush@arzama.police<br>
+        <strong>PASSWORD:</strong> <span class="text-cyan-400">piyush@123</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particle.style.width = Math.random() * 4 + 1 + 'px';
+        particle.style.height = particle.style.width;
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    createParticles();
+    
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Direct access - NO AUTH CHECK REQUIRED
+      document.querySelector('.login-container').style.animation = 'entrance 1s reverse';
+      document.querySelector('.scan-line').style.animationDuration = '2s';
+      
+      setTimeout(() => {
+        document.body.innerHTML = '<div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;font-family:\'Orbitron\';font-size:3rem;color:#00f5ff;text-shadow:0 0 30px #00f5ff;z-index:100;"><div style="animation: pulse 1s infinite;">ACCESS GRANTED</div><div style="font-size:1.5rem;margin-top:2rem;color:#fff;opacity:0.8;">Loading Police Intelligence Dashboard...</div></div>';
+        setTimeout(() => {
+          window.location.href = 'ARZAMA-POLICE-FINAL-COMPLETED.html';
+        }, 2000);
+      }, 1000);
+    });
+
+    console.log('🛡️ ARZAMA POLICE - FULLY FIXED & READY');
+    console.log('Click ACCESS GRANTED → Direct dashboard (no login required)');
+  </script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛡️ ARZAMA POLICE ADMIN PANEL</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary-cyan: #00f5ff;
+      --alert-red: #ff1744;
+      --secondary-violet: #8b5cf6;
+      --bg-dark: #0a0a0a;
+      --panel-dark: #1a1a2e;
+      --glass-bg: rgba(255,255,255,0.05);
+      --glow-cyan: 0 0 20px #00f5ff;
+      --glow-red: 0 0 30px #ff1744;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #16213e 50%, var(--bg-dark) 100%);
+      color: #e2e8f0;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    /* Multiple animated logos */
+    .logo-shield {
+      position: fixed;
+      font-size: 6rem;
+      opacity: 0.04;
+      z-index: -1;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .logo-shield:nth-child(1) { top: 10%; right: 15%; animation-delay: 0s; }
+    .logo-shield:nth-child(2) { top: 60%; left: 10%; font-size: 4rem; animation-delay: 3s; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(5deg); }
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 300px;
+      height: 100vh;
+      background: linear-gradient(180deg, var(--panel-dark), var(--bg-dark));
+      border-right: 1px solid rgba(0,245,255,0.3);
+      padding: 2.5rem 1.5rem;
+      overflow-y: auto;
+      z-index: 999;
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      box-shadow: 2px 0 20px rgba(0,245,255,0.1);
+    }
+    
+    .sidebar.open { transform: translateX(0); }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 1.2rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: #94a3b8;
+      font-weight: 500;
+      font-size: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--primary-cyan);
+      transform: scaleY(0);
+      transition: transform 0.3s;
+    }
+    
+    .nav-item:hover::before,
+    .nav-item.active::before { transform: scaleY(1); }
+    
+    .nav-item:hover, .nav-item.active {
+      background: rgba(0,245,255,0.1);
+      color: var(--primary-cyan);
+      box-shadow: var(--glow-cyan);
+      transform: translateX(12px);
+    }
+    
+    .main-content {
+      padding-left: 0;
+      transition: padding-left 0.4s;
+      min-height: 100vh;
+    }
+    
+    .main-content.shifted { padding-left: 300px; }
+    
+    .glass-panel { 
+      background: var(--glass-bg); 
+      backdrop-filter: blur(25px); 
+      border: 1px solid rgba(255,255,255,0.15); 
+      border-radius: 24px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .glass-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
+    }
+    
+    .glow-cyan { box-shadow: var(--glow-cyan); }
+    .glow-red { box-shadow: var(--glow-red); animation: pulse 2s infinite; }
+    
+    @keyframes pulse { 
+      0%, 100% { box-shadow: var(--glow-red); } 
+      50% { box-shadow: 0 0 50px #ff1744; } 
+    }
+    
+    .neon-text { 
+      background: linear-gradient(45deg, var(--primary-cyan), var(--secondary-violet)); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      background-clip: text; 
+      font-family: 'Orbitron', monospace; 
+      font-weight: 700; 
+      text-shadow: 0 0 15px rgba(0,245,255,0.6); 
+    }
+    
+    .btn {
+      padding: 14px 28px;
+      border-radius: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(45deg, var(--primary-cyan), #06b6d4);
+      color: #0a0a0a;
+      box-shadow: var(--glow-cyan);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(0,245,255,0.5);
+    }
+    
+    .btn-danger {
+      background: linear-gradient(45deg, var(--alert-red), #ef4444);
+      color: white;
+      box-shadow: var(--glow-red);
+    }
+    
+    .btn-success {
+      background: linear-gradient(45deg, #10b981, #059669);
+      color: white;
+    }
+    
+    .status-badge {
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 13px;
+      border: 2px solid;
+      cursor: pointer;
+      transition: all 0.3s;
+      min-width: 100px;
+      text-align: center;
+    }
+    
+    .status-badge:hover { transform: scale(1.05); }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 2.5rem;
+    }
+    
+    .profile-card {
+      background: linear-gradient(135deg, rgba(26,26,46,0.9), rgba(10,10,10,1));
+      border: 2px solid rgba(0,245,255,0.4);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: var(--glow-cyan);
+    }
+    
+    .data-table {
+      max-height: 400px;
+      overflow-y: auto;
+      border-radius: 16px;
+    }
+    
+    .table-row {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      transition: background 0.3s;
+    }
+    
+    .table-row:hover {
+      background: rgba(0,245,255,0.05);
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar { width: 100vw; }
+      .main-content.shifted { padding-left: 0; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .table-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Logos -->
+  <div class="logo-shield">🛡️</div>
+  <div class="logo-shield">🚨</div>
+  
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar" id="sidebar">
+    <div class="flex items-center mb-12 pb-6 border-b border-cyan-500/30">
+      <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center glow-cyan mr-4">
+        🛡️
+      </div>
+      <div>
+        <div class="neon-text text-xl font-bold">ADMIN PANEL</div>
+        <div class="text-xs opacity-75 mt-1">PIYUSH SHARMA</div>
+      </div>
+    </div>
+    
+    <div class="space-y-2 mb-8">
+      <div class="nav-item active" onclick="showSection('dashboard')">
+        <span class="mr-4 text-lg">📊</span> Dashboard
+      </div>
+      <div class="nav-item" onclick="showSection('citizens')">
+        <span class="mr-4 text-lg">👥</span> Citizens <span class="ml-auto px-2 py-1 bg-black/30 rounded-full text-xs">(11)</span>
+      </div>
+      <div class="nav-item" onclick="showSection('criminals')">
+        <span class="mr-4 text-lg">🚨</span> Criminal Records <span class="ml-auto px-2 py-1 bg-red-500/20 text-red-300 rounded-full text-xs">(8)</span>
+      </div>
+      <div class="nav-item" onclick="showSection('cases')">
+        <span class="mr-4 text-lg">📁</span> Cases <span class="ml-auto px-2 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-xs">(5)</span>
+      </div>
+      <div class="nav-item" onclick="showSection('officers')">
+        <span class="mr-4 text-lg">👮</span> Officer Profiles
+      </div>
+    </div>
+    
+    <div class="border-t border-gray-700 pt-6">
+      <div class="nav-item text-cyan-400" onclick="showSection('logs')">
+        <span class="mr-4 text-lg">📋</span> Activity Logs
+      </div>
+      <div class="nav-item text-red-400 mt-4" onclick="logout()">
+        <span class="mr-4 text-lg">🚪</span> Logout Admin
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Overlay -->
+  <div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-998 opacity-0 pointer-events-none transition-all duration-300" id="overlay"></div>
+  
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <!-- Top Bar -->
+    <header class="glass-panel mb-8 p-6 flex justify-between items-center sticky top-0 bg-black/20 z-10 backdrop-blur-sm">
+      <div class="flex items-center">
+        <button onclick="toggleSidebar()" class="btn-primary mr-6 p-3 rounded-xl glow-cyan text-xl">
+          ☰
+        </button>
+        <div>
+          <h1 class="neon-text text-3xl md:text-4xl font-bold mb-1">ARZAMA POLICE COMMAND</h1>
+          <div class="text-cyan-300 text-lg font-medium">ADMIN CONTROL PANEL | Piyush Sharma</div>
+        </div>
+      </div>
+      
+      <div class="profile-card p-4 md:p-6">
+        <img src="https://randomuser.me/api/portraits/men/11.jpg" class="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-cyan-500 glow-cyan mx-auto md:mr-6 mb-3 md:mb-0" alt="Admin">
+        <div class="font-bold text-lg md:text-xl text-center md:text-left">ADMIN PIYUSH</div>
+        <div class="text-cyan-400 text-sm font-medium">SUPER ADMIN</div>
+      </div>
+    </header>
+    
+    <!-- Dashboard -->
+    <section id="dashboardSection">
+      <div class="stats-grid">
+        <div class="glass-panel p-8 text-center glow-cyan">
+          <div class="text-5xl font-bold text-cyan-400 mb-3">👥 11</div>
+          <div class="text-xl font-semibold opacity-90 uppercase tracking-wide">Citizens</div>
+        </div>
+        <div class="glass-panel p-8 text-center glow-red">
+          <div class="text-5xl font-bold text-red-400 mb-3">🚨 3</div>
+          <div class="text-xl font-semibold opacity-90 uppercase tracking-wide">Wanted</div>
+        </div>
+        <div class="glass-panel p-8 text-center">
+          <div class="text-5xl font-bold text-green-400 mb-3">✅ 3</div>
+          <div class="text-xl font-semibold opacity-90 uppercase tracking-wide">Arrested</div>
+        </div>
+        <div class="glass-panel p-8 text-center">
+          <div class="text-5xl font-bold text-yellow-400 mb-3">📁 4</div>
+          <div class="text-xl font-semibold opacity-90 uppercase tracking-wide">Active Cases</div>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <!-- Quick Actions -->
+        <div class="glass-panel">
+          <h2 class="neon-text text-3xl font-bold mb-8 flex items-center">
+            ⚡ QUICK ADMIN ACTIONS
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <button class="btn btn-primary h-20 flex items-center justify-center text-lg font-bold shadow-2xl">
+              ➕ ADD CITIZEN
+            </button>
+            <button class="btn btn-danger h-20 flex items-center justify-center text-lg font-bold shadow-2xl glow-red">
+              🚨 MARK WANTED
+            </button>
+            <button class="btn bg-gradient-to-r from-green-500 to-emerald-600 h-20 flex items-center justify-center text-lg font-bold shadow-2xl">
+              ✅ ARREST NOW
+            </button>
+            <button class="btn bg-gradient-to-r from-yellow-500 to-amber-600 h-20 flex items-center justify-center text-lg font-bold shadow-2xl">
+              👁️ SURVEILLANCE
+            </button>
+          </div>
+        </div>
+        
+        <!-- Live Feed -->
+        <div class="glass-panel">
+          <h2 class="neon-text text-3xl font-bold mb-8">📡 LIVE FEED</h2>
+          <div class="space-y-4 max-h-96 overflow-auto p-4 bg-black/30 rounded-2xl">
+            <div class="flex items-center p-4 bg-gradient-to-r from-green-500/10 to-transparent rounded-xl border-l-4 border-green-400">
+              <div class="w-3 h-3 bg-green-400 rounded-full mr-4"></div>
+              <span class="font-mono text-sm">ADMIN LOGIN SUCCESSFUL</span>
+              <span class="ml-auto text-xs opacity-75">00:02</span>
+            </div>
+            <div class="flex items-center p-4 bg-gradient-to-r from-red-500/10 to-transparent rounded-xl border-l-4 border-red-400">
+              <div class="w-3 h-3 bg-red-400 rounded-full mr-4"></div>
+              <span class="font-mono text-sm">VIKRAM DESAI MARKED WANTED</span>
+              <span class="ml-auto text-xs opacity-75">00:05</span>
+            </div>
+            <div class="flex items-center p-4 bg-gradient-to-r from-yellow-500/10 to-transparent rounded-xl border-l-4 border-yellow-400">
+              <div class="w-3 h-3 bg-yellow-400 rounded-full mr-4"></div>
+              <span class="font-mono text-sm">CASE #001 ACTIVE</span>
+              <span class="ml-auto text-xs opacity-75">00:12</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const DEMO_DATA = {
+      citizens: 11,
+      criminals: 8,
+      cases: 5,
+      officers: 3
+    };
+    
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const main = document.getElementById('mainContent');
+      
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('opacity-100');
+      overlay.classList.toggle('pointer-events-auto');
+      main.classList.toggle('shifted');
+    }
+    
+    function showSection(sectionName) {
+      document.querySelectorAll('section').forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Update nav active state
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      toggleSidebar();
+      
+      console.log(`Switched to ${sectionName}`);
+    }
+    
+    function logout() {
+      if (confirm('🔒 Logout from ARZAMA POLICE ADMIN PANEL?\nAll session data will be cleared.')) {
+        localStorage.clear();
+        location.reload();
+      }
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🛡️ ARZAMA POLICE ADMIN PANEL v3.0');
+      console.log('Login: admin@arzama.police / admin');
+      console.log('Features: Sidebar Nav, Officer Profile, Arrest Actions, Responsive');
+    });
+  </script>
+</body>
+</html>

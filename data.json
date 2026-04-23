@@ -1,0 +1,392 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Inspector Arjun Rao",
+      "email": "arjun@arzama.police",
+      "role": "admin",
+      "password": "admin123"
+    },
+    {
+      "id": 2,
+      "name": "Officer Neha Singh",
+      "email": "neha@arzama.police",
+      "role": "officer",
+      "password": "officer123"
+    },
+    {
+      "id": 3,
+      "name": "Cyber Unit K-9",
+      "email": "k9@arzama.police",
+      "role": "officer",
+      "password": "cyber456"
+    }
+  ],
+  "citizens": [
+    {
+      "id": 1,
+      "name": "Rahul Sharma",
+      "dob": "1985-03-15",
+      "address": "23 MG Road, Arzama Central",
+      "id_proof": "ID-ARS-001234",
+      "photo_url": "https://randomuser.me/api/portraits/men/1.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Priya Patel",
+      "dob": "1990-07-22",
+      "address": "45 Nehru Nagar, Arzama East",
+      "id_proof": "ID-ARS-005678",
+      "photo_url": "https://randomuser.me/api/portraits/women/2.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Vikram Desai",
+      "dob": "1978-11-08",
+      "address": "12 Industrial Area, Arzama South",
+      "id_proof": "ID-ARS-009876",
+      "photo_url": "https://randomuser.me/api/portraits/men/3.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Aisha Khan",
+      "dob": "1995-04-30",
+      "address": "67 Hill View, Arzama North",
+      "id_proof": "ID-ARS-112233",
+      "photo_url": "https://randomuser.me/api/portraits/women/4.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Unknown Subject X",
+      "dob": "????",
+      "address": "Classified",
+      "id_proof": "ID-ARS-XXXXX",
+      "photo_url": "https://i.pravatar.cc/300?img=5"
+    },
+    {
+      "id": 6,
+      "name": "Sanjay Gupta",
+      "dob": "1982-09-12",
+      "address": "89 Market Street, Arzama West",
+      "id_proof": "ID-ARS-445566",
+      "photo_url": "https://randomuser.me/api/portraits/men/6.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Meera Joshi",
+      "dob": "1992-01-18",
+      "address": "34 Park Lane, Arzama Central",
+      "id_proof": "ID-ARS-778899",
+      "photo_url": "https://randomuser.me/api/portraits/women/7.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Rajesh Kumar",
+      "dob": "1988-06-05",
+      "address": "56 River Side, Arzama East",
+      "id_proof": "ID-ARS-001122",
+      "photo_url": "https://randomuser.me/api/portraits/men/8.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Lakshmi Nair",
+      "dob": "1993-12-27",
+      "address": "78 College Road, Arzama South",
+      "id_proof": "ID-ARS-334455",
+      "photo_url": "https://randomuser.me/api/portraits/women/9.jpg"
+    },
+    {
+      "id": 10,
+      "name": "Amit Singh",
+      "dob": "1980-08-14",
+      "address": "91 Highway 7, Arzama North",
+      "id_proof": "ID-ARS-667788",
+      "photo_url": "https://randomuser.me/api/portraits/men/10.jpg"
+    },
+    {
+      "id": 11,
+      "name": "Fatima Ali",
+      "dob": "1991-02-20",
+      "address": "22 Old Town, Arzama West",
+      "id_proof": "ID-ARS-990011",
+      "photo_url": "https://randomuser.me/api/portraits/women/11.jpg"
+    },
+    {
+      "id": 12,
+      "name": "Karan Malhotra",
+      "dob": "1986-10-03",
+      "address": "45 New Colony, Arzama Central",
+      "id_proof": "ID-ARS-223344",
+      "photo_url": "https://randomuser.me/api/portraits/men/12.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Sneha Reddy",
+      "dob": "1994-05-11",
+      "address": "67 Lake View, Arzama East",
+      "id_proof": "ID-ARS-556677",
+      "photo_url": "https://randomuser.me/api/portraits/women/13.jpg"
+    },
+    {
+      "id": 14,
+      "name": "Devendra Bose",
+      "dob": "1979-07-29",
+      "address": "18 Factory Zone, Arzama South",
+      "id_proof": "ID-ARS-889900",
+      "photo_url": "https://randomuser.me/api/portraits/men/14.jpg"
+    },
+    {
+      "id": 15,
+      "name": "Riya Menon",
+      "dob": "1996-11-16",
+      "address": "90 Skyline Towers, Arzama North",
+      "id_proof": "ID-ARS-112233",
+      "photo_url": "https://randomuser.me/api/portraits/women/15.jpg"
+    },
+    {
+      "id": 16,
+      "name": "Arnav Patel",
+      "dob": "1984-03-07",
+      "address": "33 Bridge Street, Arzama West",
+      "id_proof": "ID-ARS-445566",
+      "photo_url": "https://randomuser.me/api/portraits/men/16.jpg"
+    },
+    {
+      "id": 17,
+      "name": "Kavya Iyer",
+      "dob": "1990-09-25",
+      "address": "55 Garden City, Arzama Central",
+      "id_proof": "ID-ARS-778899",
+      "photo_url": "https://randomuser.me/api/portraits/women/17.jpg"
+    },
+    {
+      "id": 18,
+      "name": "Manish Verma",
+      "dob": "1987-12-01",
+      "address": "77 Port Area, Arzama East",
+      "id_proof": "ID-ARS-001122",
+      "photo_url": "https://randomuser.me/api/portraits/men/18.jpg"
+    },
+    {
+      "id": 19,
+      "name": "Pooja Das",
+      "dob": "1993-04-19",
+      "address": "99 University Ave, Arzama South",
+      "id_proof": "ID-ARS-334455",
+      "photo_url": "https://randomuser.me/api/portraits/women/19.jpg"
+    },
+    {
+      "id": 20,
+      "name": "Rohan Kapoor",
+      "dob": "1981-06-13",
+      "address": "11 Elite Residency, Arzama North",
+      "id_proof": "ID-ARS-667788",
+      "photo_url": "https://randomuser.me/api/portraits/men/20.jpg"
+    }
+  ],
+  "cases": [
+    {
+      "id": 1,
+      "title": "Operation Night Shadow",
+      "description": "Cybercrime syndicate targeting government databases. Multiple encrypted communications intercepted.",
+      "status": "active",
+      "assigned_officer": "Inspector Arjun Rao",
+      "timeline": ["2024-01-15: Case opened", "2024-01-20: First arrest", "2024-01-25: Evidence analysis"]
+    },
+    {
+      "id": 2,
+      "title": "Red Corridor Incident",
+      "description": "Arms trafficking network operating through Arzama port. 15 AK-47s seized.",
+      "status": "active",
+      "assigned_officer": "Officer Neha Singh",
+      "timeline": ["2024-01-10: Tip received", "2024-01-18: Raid conducted"]
+    },
+    {
+      "id": 3,
+      "title": "Ghost Protocol Breach",
+      "description": "Major system hack on Arzama Traffic Management. Suspected insider threat.",
+      "status": "under_investigation",
+      "assigned_officer": "Cyber Unit K-9",
+      "timeline": ["2024-01-22: Breach detected", "2024-01-24: Forensics started"]
+    },
+    {
+      "id": 4,
+      "title": "Golden Triangle Fraud",
+      "description": "Multi-crore investment scam affecting 500+ citizens.",
+      "status": "closed",
+      "assigned_officer": "Inspector Arjun Rao",
+      "timeline": ["2023-12-01: Complaint filed", "2024-01-05: Mastermind arrested"]
+    },
+    {
+      "id": 5,
+      "title": "Shadow Network",
+      "description": "Underground drug distribution ring in Arzama suburbs.",
+      "status": "active",
+      "assigned_officer": "Officer Neha Singh",
+      "timeline": ["2024-01-12: Surveillance began"]
+    },
+    {
+      "id": 6,
+      "title": "Corporate Espionage",
+      "description": "Tech firm rival stealing IP through social engineering.",
+      "status": "under_investigation",
+      "assigned_officer": "Cyber Unit K-9",
+      "timeline": ["2024-01-19: Whistleblower contact"]
+    },
+    {
+      "id": 7,
+      "title": "Highway Heist",
+      "description": "Armored truck robbery on Arzama-Mumbai highway. 2cr cash stolen.",
+      "status": "active",
+      "assigned_officer": "Inspector Arjun Rao",
+      "timeline": ["2024-01-14: Robbery occurred"]
+    },
+    {
+      "id": 8,
+      "title": "Silent Assassins",
+      "description": "Contract killing ring targeting businessmen.",
+      "status": "active",
+      "assigned_officer": "Officer Neha Singh",
+      "timeline": ["2024-01-16: First confirmed hit"]
+    }
+  ],
+  "criminal_records": [
+    {
+      "id": 1,
+      "citizen_id": 3,
+      "case_id": 2,
+      "charges": "Arms Trafficking, Possession of Illegal Weapons",
+      "status": "wanted"
+    },
+    {
+      "id": 2,
+      "citizen_id": 5,
+      "case_id": 3,
+      "charges": "Cyber Terrorism, Unauthorized System Access",
+      "status": "under_surveillance"
+    },
+    {
+      "id": 3,
+      "citizen_id": 1,
+      "case_id": 1,
+      "charges": "Cyber Fraud, Money Laundering",
+      "status": "arrested"
+    },
+    {
+      "id": 4,
+      "citizen_id": 6,
+      "case_id": 5,
+      "charges": "Drug Trafficking, Distribution",
+      "status": "wanted"
+    },
+    {
+      "id": 5,
+      "citizen_id": 12,
+      "case_id": 7,
+      "charges": "Armed Robbery, Conspiracy",
+      "status": "under_surveillance"
+    },
+    {
+      "id": 6,
+      "citizen_id": 14,
+      "case_id": 6,
+      "charges": "Corporate Espionage, Theft of Trade Secrets",
+      "status": "arrested"
+    },
+    {
+      "id": 7,
+      "citizen_id": 18,
+      "case_id": 8,
+      "charges": "Contract Killing, Murder for Hire",
+      "status": "wanted"
+    },
+    {
+      "id": 8,
+      "citizen_id": 10,
+      "case_id": 4,
+      "charges": "Financial Fraud, Ponzi Scheme",
+      "status": "cleared"
+    },
+    {
+      "id": 9,
+      "citizen_id": 16,
+      "case_id": 2,
+      "charges": "Illegal Arms Possession",
+      "status": "arrested"
+    },
+    {
+      "id": 10,
+      "citizen_id": 8,
+      "case_id": 1,
+      "charges": "Cybercrime Accomplice",
+      "status": "under_surveillance"
+    },
+    {
+      "id": 11,
+      "citizen_id": 2,
+      "case_id": 5,
+      "charges": "Drug Possession",
+      "status": "cleared"
+    },
+    {
+      "id": 12,
+      "citizen_id": 20,
+      "case_id": 3,
+      "charges": "Hacking Assistance",
+      "status": "wanted"
+    },
+    {
+      "id": 13,
+      "citizen_id": 11,
+      "case_id": 6,
+      "charges": "Data Theft",
+      "status": "arrested"
+    },
+    {
+      "id": 14,
+      "citizen_id": 17,
+      "case_id": 7,
+      "charges": "Robbery Accomplice",
+      "status": "under_surveillance"
+    },
+    {
+      "id": 15,
+      "citizen_id": 19,
+      "case_id": 8,
+      "charges": "Assault",
+      "status": "cleared"
+    }
+  ],
+  "evidence": [
+    {
+      "id": 1,
+      "record_id": 1,
+      "file_url": "https://source.unsplash.com/300x200/?crime,arrest"
+    },
+    {
+      "id": 2,
+      "record_id": 1,
+      "file_url": "https://source.unsplash.com/300x200/?police,weapon"
+    },
+    {
+      "id": 3,
+      "record_id": 2,
+      "file_url": "https://source.unsplash.com/300x200/?hacker,computer"
+    },
+    {
+      "id": 4,
+      "record_id": 3,
+      "file_url": "https://source.unsplash.com/300x200/?cyber,code"
+    },
+    {
+      "id": 5,
+      "record_id": 4,
+      "file_url": "https://source.unsplash.com/300x200/?drugs"
+    },
+    {
+      "id": 6,
+      "record_id": 5,
+      "file_url": "https://source.unsplash.com/300x200/?robbery"
+    }
+  ]
+}

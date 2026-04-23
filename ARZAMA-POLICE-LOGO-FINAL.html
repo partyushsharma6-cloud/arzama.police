@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛡️ ARZAMA POLICE INTELLIGENCE SYSTEM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --primary-cyan: #00f5ff;
+      --alert-red: #ff1744;
+      --secondary-violet: #8b5cf6;
+      --bg-dark: #0a0a0a;
+      --panel-dark: #1a1a2e;
+      --glass-bg: rgba(255,255,255,0.05);
+      --glow-cyan: 0 0 25px #00f5ff;
+      --glow-red: 0 0 35px #ff1744;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #16213e 50%, #0f0f23 100%);
+      color: #e2e8f0;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Official Police Logo */
+    .police-logo {
+      position: fixed;
+      top: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      z-index: 1;
+      opacity: 0.12;
+      filter: drop-shadow(0 0 30px var(--primary-cyan));
+      animation: logoFloat 6s ease-in-out infinite;
+    }
+    
+    @keyframes logoFloat {
+      0%, 100% { transform: translateX(-50%) translateY(0px) rotate(0deg); }
+      33% { transform: translateX(-50%) translateY(-15px) rotate(1deg); }
+      66% { transform: translateX(-50%) translateY(-8px) rotate(-1deg); }
+    }
+    
+    /* Scan lines */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(90deg, transparent 49%, rgba(0,245,255,0.02) 50%, transparent 51%),
+        linear-gradient(0deg, transparent 49%, rgba(139,92,246,0.02) 50%, transparent 51%);
+      background-size: 60px 60px, 100px 100px;
+      animation: scanLines 25s linear infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    @keyframes scanLines {
+      0% { transform: translateY(-60px); }
+      100% { transform: translateY(100vh); }
+    }
+    
+    .glass-panel { 
+      background: var(--glass-bg); 
+      backdrop-filter: blur(30px); 
+      border: 1px solid rgba(255,255,255,0.12); 
+      border-radius: 24px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .glass-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--primary-cyan) 50%, transparent 100%);
+      opacity: 0.6;
+    }
+    
+    .glow-cyan { 
+      box-shadow: var(--glow-cyan), 0 0 40px rgba(0,245,255,0.3); 
+      transition: all 0.4s ease;
+    }
+    
+    .glow-cyan:hover { 
+      box-shadow: 0 0 50px var(--primary-cyan), 0 0 80px rgba(0,245,255,0.5);
+      transform: translateY(-5px);
+    }
+    
+    .glow-red { 
+      box-shadow: var(--glow-red), 0 0 40px rgba(255,23,68,0.4); 
+      animation: pulse 2.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { box-shadow: var(--glow-red), 0 0 40px rgba(255,23,68,0.4); }
+      50% { box-shadow: 0 0 60px var(--alert-red), 0 0 100px rgba(255,23,68,0.6); }
+    }
+    
+    .neon-text { 
+      background: linear-gradient(135deg, var(--primary-cyan), var(--secondary-violet), #06b6d4); 
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      text-shadow: 0 0 20px rgba(0,245,255,0.8);
+      animation: neonShift 3s ease-in-out infinite alternate;
+    }
+    
+    @keyframes neonShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    
+    .btn {
+      padding: 16px 32px;
+      border-radius: 20px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 15px;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Orbitron', monospace;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(45deg, var(--primary-cyan), #06b6d4);
+      color: #0a0a0a;
+      box-shadow: var(--glow-cyan);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,245,255,0.6);
+    }
+    
+    .btn-danger {
+      background: linear-gradient(45deg, var(--alert-red), #ef4444);
+      color: white;
+      box-shadow: var(--glow-red);
+    }
+    
+    .btn-success {
+      background: linear-gradient(45deg, #10b981, #059669);
+      color: white;
+      box-shadow: 0 0 20px rgba(16,185,129,0.6);
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .stat-card {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+    }
+    
+    .status-badge {
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 14px;
+      border: 2px solid;
+      cursor: pointer;
+      transition: all 0.3s;
+      min-width: 120px;
+      text-align: center;
+      font-family: 'Orbitron', monospace;
+    }
+    
+    .status-wanted { 
+      background: rgba(239,68,68,0.2); 
+      border-color: var(--alert-red);
+      color: #fecaca;
+      box-shadow: var(--glow-red);
+    }
+    
+    .status-arrested { 
+      background: rgba(34,197,94,0.3);
+      border-color: #10b981;
+      color: #86efac;
+    }
+    
+    @media (max-width: 768px) {
+      .police-logo { width: 120px; height: 120px; top: 2%; }
+      .stats-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfnaB6oiUCpDt3Q0GFzIMk7Craz2AsAODBcQ&s" alt="Arzama Police Logo" class="police-logo">
+  
+  <div class="container mx-auto px-6 py-12 max-w-7xl">
+    <!-- Header -->
+    <header class="glass-panel text-center mb-16">
+      <h1 class="neon-text text-5xl md:text-7xl font-black mb-6 tracking-tight">
+        ARZAMA POLICE INTELLIGENCE SYSTEM
+      </h1>
+      <p class="text-2xl md:text-3xl text-cyan-300 font-semibold mb-12 opacity-90">
+        Securing Intelligence • Enforcing Justice
+      </p>
+      <div class="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-4xl mx-auto">
+        <div class="glass-panel p-8 text-center glow-cyan cursor-pointer hover:scale-105 transition-all">
+          <div class="text-5xl mb-4">👥</div>
+          <div class="text-3xl font-bold text-cyan-400 mb-2">11 Citizens</div>
+          <div class="text-lg opacity-80">Full Database Access</div>
+        </div>
+        <div class="glass-panel p-8 text-center glow-red cursor-pointer hover:scale-105 transition-all">
+          <div class="text-5xl mb-4">🚨</div>
+          <div class="text-3xl font-bold text-red-400 mb-2">3 Wanted</div>
+          <div class="text-lg opacity-80">Live Status Updates</div>
+        </div>
+      </div>
+    </header>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8">
+      <!-- Citizens Panel -->
+      <div class="glass-panel glow-cyan">
+        <h2 class="neon-text text-4xl font-bold mb-12 text-center">👥 CITIZEN DATABASE</h2>
+        <div class="space-y-6 max-h-96 overflow-y-auto">
+          <div class="flex items-center p-6 glass-panel rounded-2xl hover:bg-white/5 transition-all">
+            <img src="https://randomuser.me/api/portraits/men/1.jpg" class="w-20 h-20 rounded-full border-4 border-cyan-400 glow-cyan mr-6" alt="Citizen">
+            <div class="flex-1 min-w-0">
+              <h3 class="font-bold text-xl mb-1">Rahul Sharma</h3>
+              <div class="text-sm opacity-75 mb-1">ID: ARS-001234</div>
+              <div class="text-sm opacity-60">23 MG Road, Central</div>
+            </div>
+            <div class="status-arrested status-badge ml-auto">ARRESTED</div>
+          </div>
+          
+          <div class="flex items-center p-6 glass-panel rounded-2xl hover:bg-white/5 transition-all">
+            <img src="https://randomuser.me/api/portraits/women/2.jpg" class="w-20 h-20 rounded-full border-4 border-yellow-400 mr-6" alt="Citizen">
+            <div class="flex-1 min-w-0">
+              <h3 class="font-bold text-xl mb-1">Priya Patel</h3>
+              <div class="text-sm opacity-75 mb-1">ID: ARS-005678</div>
+              <div class="text-sm opacity-60">Nehru Nagar, East</div>
+            </div>
+            <div class="status-wanted status-badge ml-auto">WANTED</div>
+          </div>
+          
+          <!-- More citizens... -->
+        </div>
+        <div class="mt-8 pt-8 border-t border-white/10 text-center">
+          <button class="btn btn-primary px-12 py-4 text-xl font-bold">
+            ➕ ADD CITIZEN
+          </button>
+        </div>
+      </div>
+      
+      <!-- Criminal Panel -->
+      <div class="glass-panel glow-red">
+        <h2 class="neon-text text-4xl font-bold mb-12 text-center">🚨 CRIMINAL RECORDS</h2>
+        <div class="space-y-6 max-h-96 overflow-y-auto">
+          <div class="flex items-center p-6 glass-panel rounded-2xl hover:bg-red-500/5 transition-all">
+            <img src="https://randomuser.me/api/portraits/men/3.jpg" class="w-20 h-20 rounded-full border-4 border-red-400 glow-red mr-6" alt="Criminal">
+            <div class="flex-1 min-w-0">
+              <h3 class="font-bold text-xl mb-1">Vikram Desai</h3>
+              <div class="text-sm opacity-75 mb-1">Arms Trafficking</div>
+              <div class="text-xs opacity-60">Case #001 - Night Shadow</div>
+            </div>
+            <select class="status-wanted status-badge ml-auto">
+              <option>WANTED</option>
+              <option>ARRESTED</option>
+              <option>SURVEILLANCE</option>
+            </select>
+          </div>
+          
+          <div class="flex items-center p-6 glass-panel rounded-2xl hover:bg-green-500/5 transition-all">
+            <img src="https://i.pravatar.cc/80?img=5" class="w-20 h-20 rounded-full border-4 border-green-400 mr-6" alt="Criminal">
+            <div class="flex-1 min-w-0">
+              <h3 class="font-bold text-xl mb-1">Unknown Subject X</h3>
+              <div class="text-sm opacity-75 mb-1">Cyber Terrorism</div>
+              <div class="text-xs opacity-60">Case #002 - Ghost Protocol</div>
+            </div>
+            <div class="status-arrested status-badge ml-auto">ARRESTED</div>
+          </div>
+        </div>
+        <div class="mt-8 pt-8 border-t border-white/10 text-center">
+          <button class="btn btn-danger px-12 py-4 text-xl font-bold">
+            🚨 NEW RECORD
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bottom Status Bar -->
+    <div class="glass-panel p-6 mt-16 text-center">
+      <div class="neon-text text-2xl font-bold mb-4">✅ SYSTEM STATUS</div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div>
+          <div class="text-3xl mb-2">👮‍♂️ Piyush Sharma</div>
+          <div class="opacity-75">SUPER ADMIN</div>
+        </div>
+        <div>
+          <div class="text-3xl mb-2 text-green-400">🟢 ONLINE</div>
+          <div class="opacity-75">Real-time</div>
+        </div>
+        <div>
+          <div class="text-3xl mb-2">11:45 PM</div>
+          <div class="opacity-75">Arzama Time</div>
+        </div>
+        <div>
+          <div class="text-3xl mb-2">HQ CENTRAL</div>
+          <div class="opacity-75">Location</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Interactive functionality
+    document.querySelectorAll('.status-badge').forEach(badge => {
+      badge.addEventListener('click', () => {
+        badge.classList.toggle('glow-cyan');
+        setTimeout(() => badge.classList.remove('glow-cyan'), 200);
+      });
+    });
+    
+    document.querySelectorAll('.glass-panel').forEach(panel => {
+      panel.addEventListener('mouseenter', () => {
+        panel.style.transform = 'translateY(-8px)';
+      });
+      panel.addEventListener('mouseleave', () => {
+        panel.style.transform = 'translateY(0)';
+      });
+    });
+
+    console.log('🛡️ ARZAMA POLICE INTELLIGENCE SYSTEM');
+    console.log('• Cinematic dashboard with official police logo');
+    console.log('• No admin panel - Direct access');
+    console.log('• Arrest/status changes live');
+    console.log('• Fully responsive mobile');
+  </script>
+</body>
+</html>
+
